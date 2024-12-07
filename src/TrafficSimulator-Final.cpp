@@ -1,4 +1,3 @@
-#include <iostream>
 #include <thread>
 #include <vector>
 
@@ -6,6 +5,7 @@
 #include "Intersection.h"
 #include "Street.h"
 #include "Vehicle.h"
+#include <string>
 
 // Paris
 void createTrafficObjects_Paris(
