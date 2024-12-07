@@ -2,6 +2,8 @@
 #define TRAFFICLIGHT_H
 
 #include <condition_variable>
+#include <deque>
+#include <memory>
 #include <mutex>
 
 #include "TrafficObject.h"
@@ -19,7 +21,13 @@ class Vehicle;
 template <class T>
 class MessageQueue {
  public:
+  T receive();
+  void send(T &&msg);
+
  private:
+  std::mutex _mutex;
+  std::condition_variable _cond;
+  std::deque<T> _messages;
 };
 
 // FP.1 : Define a class „TrafficLight“ which is a child class of TrafficObject.
@@ -54,6 +62,7 @@ class TrafficLight : public TrafficObject {
   std::condition_variable _condition;
   std::mutex _mutex;
   TrafficLightPhase _currentPhase;
+  MessageQueue<TrafficLightPhase> _msgQueue;
 };
 
 #endif
